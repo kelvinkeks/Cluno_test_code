@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        loadAppInfo()
         return true
     }
 
@@ -42,5 +43,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate
+{
+    func loadAppInfo()
+    {
+        DispatchQueue.global().async {
+            //1.url
+            if let url = NSURL(string: "https://api.staging.cluno.com/offerservice/v1/offer/query")
+            {
+                //2.data
+                let data = NSData(contentsOf: url as URL)
+                //3.write
+                //get sandbox path
+                let docDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                //set file path
+                let jsonPath = (docDir as NSString).appendingPathComponent("main.json")
+                data?.write(toFile: jsonPath, atomically: true)
+                print("end loading \(jsonPath)")
+            }
+        }
+    }
 }
 
