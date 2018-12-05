@@ -8,9 +8,13 @@
 
 import UIKit
 
-class CLMainViewController: UITableViewController {
+class CLMainViewController: UITableViewController
+{
 
-    override func viewDidLoad() {
+    private var tableViewSections: Int = 0
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
@@ -39,6 +43,11 @@ class CLMainViewController: UITableViewController {
             return
         }
         
+        if let count = dict?["count"] as? Int
+        {
+             tableViewSections = count
+        }
+        
         print(dict)
     }
 
@@ -46,7 +55,7 @@ class CLMainViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return tableViewSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
